@@ -1,1 +1,1 @@
-mod linkable_actor;
+pub mod linkable_actor;
