@@ -1,0 +1,9 @@
+[package]
+name = "rust_utils"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ractor = {version = "^0.13.0", optional = true}
+
+[features]
