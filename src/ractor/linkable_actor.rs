@@ -5,6 +5,7 @@ use ractor::concurrency::JoinHandle;
 ///
 pub trait LinkableActor: Actor {
     async fn spawn_linked(
+        self,
         args: <Self as Actor>::Arguments,
         supervisor: ActorCell,
     ) -> Result<(ActorRef<Self::Msg>, JoinHandle<()>), SpawnErr>;
@@ -30,8 +31,9 @@ mod test {
     }
 
     impl LinkableActor for TestActor {
-        async fn spawn_link(args: <Self as Actor>::Arguments, supervisor: ActorCell) -> Result<(ActorRef<Self::Msg>, JoinHandle<()>), SpawnErr> {
-            todo!()
+        async fn spawn_linked(self, args: <Self as Actor>::Arguments, supervisor: ActorCell) -> Result<(ActorRef<Self::Msg>, JoinHandle<()>), SpawnErr> {
+
+            Actor::spawn_linked(None, self, (), supervisor)
         }
     }
 
