@@ -3,7 +3,7 @@ use ractor::{Actor, ActorCell, ActorRef, SpawnErr};
 use ractor::concurrency::JoinHandle;
 
 ///
-trait LinkableActor: Actor {
+pub trait LinkableActor: Actor {
     async fn spawn_linked(
         args: <Self as Actor>::Arguments,
         supervisor: ActorCell,
