@@ -1,2 +1,2 @@
 pub mod linkable_actor;
-mod well_known_actor;
+pub mod well_known_actor;
