@@ -15,7 +15,7 @@ pub trait WellKnownActor: ractor::Actor {
     }
 
     async fn spawn_linked(self, args: <Self as Actor>::Arguments, supervisor: ActorCell) -> Result<(ActorRef<Self::Msg>, JoinHandle<()>), SpawnErr> {
-        Actor::spawn_linked(Some(Self::global_name()), self, args, supervisor)
+        Actor::spawn_linked(Some(Self::global_name()), self, args, supervisor).await
     }
     // fn cast(msg: <Self as ractor::Actor>::Msg) {
     //     use ractor::{cast, ActorRef};
