@@ -35,8 +35,8 @@ pub fn now_secs_str<T: std::fmt::Display>(suffix: Option<T>) -> String {
 }
 
 /// 给定一个秒数，将其格式化为字符串
-pub fn format_secs<T: std::fmt::Display>(secs: u64, suffix: Option<T>) -> String {
-    let datetime: DateTime<Local> = Local.timestamp_opt(secs as i64, 0).unwrap();
+pub fn format_secs<T: std::fmt::Display>(secs: i64, suffix: Option<T>) -> String {
+    let datetime: DateTime<Local> = Local.timestamp_opt(secs, 0).unwrap();
     format_datetime(datetime, suffix)
 }
 
