@@ -1504,6 +1504,7 @@ dependencies = [
  "ractor",
  "sea-orm",
  "serde",
+ "serde_json",
 ]
 
 [[package]]

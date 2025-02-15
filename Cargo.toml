@@ -8,7 +8,8 @@ ractor = {version = "0.14.5", optional = true}
 libm = "0.2.11"
 chrono = "0.4.39"
 sea-orm = {version = "1.1.4", optional = true}
-serde = {version = "1.0.217", optional = true}
+serde = {version = "1.0.217", features = ["default", "derive"], optional = true}
+serde_json = {version = "1.0.138", optional = true}
 
 [features]
-database_expand = ["sea-orm", "serde"]
+database_expand = ["sea-orm", "serde", "serde_json"]
