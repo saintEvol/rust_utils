@@ -20,7 +20,7 @@ pub fn rand_s(length: usize) -> String {
 }
 
 /// 使用盐将密码进行加密
-#[cfg(feature = "rand")]
+#[cfg(feature = "encrypt")]
 pub fn encrypt_password(password: &str, salt: &str) -> String {
     use std::fmt::Write;
     let s = password.to_owned() + salt;
