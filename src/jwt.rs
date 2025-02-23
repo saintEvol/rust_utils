@@ -1,11 +1,13 @@
-pub mod jwt_auth_provider;
-mod jwt_payload;
+///
 /// jwt相关功能
 /// 用户可以通过[jwt_provider::JwtProvider]进行授权token的管理与校验
 /// 用户可以通过实现[jwt_auth_provider::JwtAuthProvider]，来自定义token的加密与解密方式
 /// 当前提供了[jwt_auth_provider::HmacAuthProvider]以提供默认的Hmac加解密功能
 /// 用户可以通过实现[jwt_storage_provider::JwtStorageProvider]来管理token的存储
 ///
+///
+pub mod jwt_auth_provider;
+pub mod jwt_payload;
 pub mod jwt_provider;
 pub mod jwt_storage_provider;
 
@@ -43,7 +45,7 @@ mod test {
         }
     }
 
-    // #[cfg(feature = "jwt_test")]
+    #[cfg(feature = "jwt_test")]
     #[tokio::test]
     async fn test_jwt_auth_provider() {
         let auth_provider = jwt_auth_provider::HmacAuthProvider::from_secret(
