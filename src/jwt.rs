@@ -10,6 +10,7 @@ pub mod jwt_auth_provider;
 pub mod jwt_payload;
 pub mod jwt_provider;
 pub mod jwt_storage_provider;
+pub mod jwt_bear_provider;
 
 #[cfg(feature = "jwt_test")]
 #[cfg(test)]
@@ -54,25 +55,25 @@ mod test {
         let storage_provider = TestAutoStorageProvider::new();
         let jwt = jwt_provider::JwtProvider::new(
             1000,
-            (1, 100),
             auth_provider,
             storage_provider,
         );
-        let auth_ret = jwt.authorize().await;
+        // let payload = &(1, 100);
+        let auth_ret = jwt.authorize((1, 100)).await;
         assert_eq!(true, auth_ret.is_ok());
-        let token = auth_ret.unwrap();
-        println!("Token: {:?}", token);
-        let ret = jwt.verify(&token).await;
+        let auth = auth_ret.unwrap();
+        println!("auth: {:?}", auth);
+        let ret = jwt.verify::<(i32, i32)>(&auth.token).await;
         println!("verify ret: {:?}", ret);
         let ret = ret.unwrap();
         assert_eq!((1, 100), ret);
 
         // 测试过期
         tokio::time::sleep(std::time::Duration::from_millis(990)).await;
-        let ret = jwt.verify(&token).await;
+        let ret = jwt.verify::<(i32, i32)>(&auth.token).await;
         assert!(ret.is_ok());
         tokio::time::sleep(std::time::Duration::from_millis(1001)).await;
-        let ret = jwt.verify(&token).await;
+        let ret = jwt.verify::<(i32, i32)>(&auth.token).await;
         println!("verify ret 1: {:?}", ret);
         assert!(ret.is_err());
     }

@@ -15,9 +15,14 @@ md5 = { version = "0.7.0", optional = true }
 scru128 = { version = "3.1.0", optional = true }
 jsonwebtoken = { version = "9.3.0", optional = true }
 tokio = { version = "^1.43.0", features = ["full"], optional = true }
+http = {version = "1.2.0", optional = true}
+axum-core = {version = "0.5.0", optional = true}
+axum-extra = {version = "0.10.0", optional = true, features = ["default", "typed-header"] }
 
 [features]
 database_expand = ["sea-orm", "serde", "serde_json"]
 encrypt = ["rand", "md5"]
+http_utils = ["http", "axum-extra", "axum-core"]
 jwt = ["serde", "scru128", "jsonwebtoken"]
+jwt_bear = ["jwt", "http_utils"]
 jwt_test = ["jwt", "tokio/test-util"]
