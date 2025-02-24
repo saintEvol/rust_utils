@@ -20,7 +20,7 @@ axum-core = { version = "0.5.0", optional = true }
 axum-extra = { version = "0.10.0", optional = true, features = ["default", "typed-header"] }
 
 [features]
-full = ["database_expand", "http_utils", "http_types", "http_serde_camel_case", "encrypt", "jwt", "jwt_bear"]
+full = ["database_expand", "http_utils", "http_types", "http_serde_camel_case", "encrypt", "jwt", "jwt_bear", "ractor"]
 # 一些数据库类型的扩展支持
 database_expand = ["sea-orm", "serde", "serde_json"]
 # 提供一些用于http的公共类型
