@@ -1,15 +1,11 @@
 #[cfg(feature = "http_utils")]
 use axum_core::RequestPartsExt;
 #[cfg(feature = "http_utils")]
-use axum_core::extract::FromRequest;
-#[cfg(feature = "http_utils")]
 use axum_core::extract::FromRequestParts;
 #[cfg(feature = "http_utils")]
 use axum_extra::TypedHeader;
 #[cfg(feature = "http_utils")]
 use axum_extra::headers::Authorization;
-#[cfg(feature = "http_utils")]
-use axum_extra::headers::Header;
 #[cfg(feature = "http_utils")]
 use axum_extra::headers::authorization::Bearer;
 #[cfg(feature = "http_utils")]
