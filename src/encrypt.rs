@@ -1,5 +1,5 @@
-#[cfg(feature = "encrypt")]
 /// 使用盐对字符串进行加密
+#[cfg(feature = "encrypt")]
 pub fn encrypt_with_salt(password: &str, salt: &str) -> String {
     use std::fmt::Write;
     let s = password.to_owned() + salt;
