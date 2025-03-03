@@ -1,6 +1,9 @@
 /// 专门处理http里的bear类型的jwt授权管理
 /// 基本用法参考[crate::jwt::jwt_provider::JwtProvider]
 ///
+///
+#[cfg(feature = "jwt_bear")]
+use axum_core::response::{IntoResponse, Response};
 #[cfg(feature = "jwt_bear")]
 use crate::http_utils::utils::get_bear_token;
 #[cfg(feature = "jwt_bear")]
@@ -13,11 +16,47 @@ use crate::jwt::jwt_provider::{AuthBody, AuthError, JwtProvider};
 use crate::jwt::jwt_storage_provider::JwtStorageProvider;
 #[cfg(feature = "jwt_bear")]
 use http::request::Parts;
+#[cfg(feature = "jwt_bear")]
+use http::StatusCode;
 
 #[cfg(feature = "jwt_bear")]
 pub enum BearAuthError<StorageError, DecodeError> {
     BearError(String),
     AuthError(AuthError<StorageError, DecodeError>),
+}
+
+#[cfg(feature = "jwt_bear")]
+impl<StorageError: std::fmt::Debug, DecodeError: std::fmt::Debug> IntoResponse for BearAuthError<StorageError, DecodeError> {
+    fn into_response(self) -> Response {
+        let (status, error_message) = match self {
+            BearAuthError::BearError(e) => {
+                (StatusCode::BAD_REQUEST, e)
+            }
+            BearAuthError::AuthError(auth_error) => {
+                match auth_error {
+                    AuthError::StorageError(e) => {
+                        (StatusCode::INTERNAL_SERVER_ERROR, format!("{e:?}"))
+                    }
+                    AuthError::DecodeError(e) => {
+                        (StatusCode::INTERNAL_SERVER_ERROR, format!("{e:?}"))
+                    }
+                    AuthError::OutOfDate => {
+                        (StatusCode::UNAUTHORIZED, "token expired".to_string())
+                    }
+                    AuthError::NoAuthDataFound => {
+                        (StatusCode::UNAUTHORIZED, "not login".to_string())
+                    }
+                    AuthError::AuthDataNotMatch => {
+                        (StatusCode::UNAUTHORIZED, "token not match".to_string())
+                    }
+                }
+            }
+        };
+        let body = axum::Json(serde_json::json!({
+            "error": error_message,
+        }));
+        (status, body).into_response()
+    }
 }
 
 #[cfg(feature = "jwt_bear")]

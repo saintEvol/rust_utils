@@ -18,6 +18,7 @@ tokio = { version = "^1.43.0", features = ["full"], optional = true }
 http = { version = "1.2.0", optional = true }
 axum-core = { version = "0.5.0", optional = true }
 axum-extra = { version = "0.10.0", optional = true, features = ["default", "typed-header"] }
+axum = {version = "0.8.1", optional = true, features = ["default"]}
 
 [features]
 full = ["database_expand", "http_utils", "http_types", "http_serde_camel_case", "encrypt", "jwt", "jwt_bear", "ractor"]
@@ -31,5 +32,5 @@ encrypt = ["rand", "md5"]
 http_utils = ["http", "axum-extra", "axum-core"]
 jwt = ["serde", "scru128", "jsonwebtoken"]
 # 为bear类型的授权提供支持
-jwt_bear = ["jwt", "http_utils"]
+jwt_bear = ["jwt", "http_utils", "axum", "serde_json"]
 jwt_test = ["jwt", "tokio/test-util"]
