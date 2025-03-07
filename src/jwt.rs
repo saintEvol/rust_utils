@@ -44,6 +44,12 @@ mod test {
             let read = self.auth.read().unwrap();
             Ok(read.clone())
         }
+
+        async fn remove(&self, _token_id: &str) -> Result<(), Self::Error> {
+            let mut write = self.auth.write().unwrap();
+            write.take();
+            Ok(())
+        }
     }
 
     #[cfg(feature = "jwt_test")]
