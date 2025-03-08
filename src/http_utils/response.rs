@@ -57,6 +57,11 @@ where
         self.data.is_some()
     }
 
+    /// 是否成功
+    pub fn is_success(&self) -> bool {
+        return self.code == 0;
+    }
+
     // pub fn data(&self) -> Option<&T> {
     //     self.data.as_ref()
     // }
