@@ -96,7 +96,7 @@ where
         &self,
         token: &str,
     ) -> Result<
-        JwtPayloadType,
+        JwtPayload<JwtPayloadType>,
         AuthError<
             <JwtStorageProviderType as JwtStorageProvider>::Error,
             <JwtAuthProviderType as JwtAuthProvider<JwtPayload<JwtPayloadType>>>::Error,
@@ -112,12 +112,11 @@ where
                 Ok(saved) => {
                     if let Some(saved) = saved {
                         let now = crate::time::now_millis() as i64;
-                        println!("check timem, now: {now}, expire ms: {}", saved.expire_ms);
                         if now < saved.expire_ms {
                             match self.auth_provider.decode(&saved.token) {
                                 Ok(saved_payload) => {
-                                    if saved_payload.pay_load == payload.pay_load {
-                                        Ok(saved_payload.pay_load)
+                                    if saved_payload.payload == payload.payload {
+                                        Ok(saved_payload)
                                     } else {
                                         Err(AuthError::AuthDataNotMatch)
                                     }
@@ -135,6 +134,21 @@ where
             },
             Err(e) => Err(AuthError::DecodeError(e)),
         }
+    }
+
+    pub async fn remove<JwtPayloadType>(
+        &self,
+        token_id: &str,
+    ) -> Result<
+        Option<AuthBody>,
+        <JwtStorageProviderType as JwtStorageProvider>::Error
+    >
+    where
+        JwtPayloadType: serde::Serialize + std::cmp::PartialEq,
+        JwtAuthProviderType: super::jwt_auth_provider::JwtAuthProvider<JwtPayload<JwtPayloadType>>,
+    {
+        let r = self.storage_provider.remove(token_id).await?;
+        Ok(r)
     }
 
     fn gen_auth_body<JwtPayloadType>(

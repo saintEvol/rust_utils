@@ -45,10 +45,10 @@ mod test {
             Ok(read.clone())
         }
 
-        async fn remove(&self, _token_id: &str) -> Result<(), Self::Error> {
+        async fn remove(&self, _token_id: &str) -> Result<Option<AuthBody>, Self::Error> {
             let mut write = self.auth.write().unwrap();
-            write.take();
-            Ok(())
+            let ret = write.take();
+            Ok(ret)
         }
     }
 
@@ -72,7 +72,7 @@ mod test {
         let ret = jwt.verify::<(i32, i32)>(&auth.token).await;
         println!("verify ret: {:?}", ret);
         let ret = ret.unwrap();
-        assert_eq!((1, 100), ret);
+        assert_eq!((1, 100), ret.payload);
 
         // 测试过期
         tokio::time::sleep(std::time::Duration::from_millis(990)).await;

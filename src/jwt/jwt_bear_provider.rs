@@ -102,7 +102,7 @@ where
         &self,
         parts: &mut Parts,
     ) -> Result<
-        JwtPayloadType,
+        JwtPayload<JwtPayloadType>,
         BearAuthError<
             <JwtStorageProviderType as JwtStorageProvider>::Error,
             <JwtAuthProviderType as JwtAuthProvider<JwtPayload<JwtPayloadType>>>::Error,
