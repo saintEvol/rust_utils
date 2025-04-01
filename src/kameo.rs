@@ -1,1 +1,1 @@
-mod global_actor_holder;
+pub mod global_actor_holder;
