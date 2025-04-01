@@ -18,10 +18,14 @@ tokio = { version = "^1.43.0", features = ["full"], optional = true }
 http = { version = "1.2.0", optional = true }
 axum-core = { version = "0.5.0", optional = true }
 axum-extra = { version = "0.10.0", optional = true, features = ["default", "typed-header"] }
-axum = {version = "0.8.1", optional = true, features = ["default"]}
+axum = { version = "0.8.1", optional = true, features = ["default"] }
+parking_lot = { version = "0.12.3", features = ["default"] }
+kameo = { version = "0.14.0", optional = true }
 
 [features]
-full = ["database_expand", "http_utils", "http_types", "http_serde_camel_case", "encrypt", "jwt", "jwt_bear", "ractor"]
+full = [
+    "database_expand", "http_utils", "http_types", "http_serde_camel_case",
+    "encrypt", "jwt", "jwt_bear", "ractor", "kameo"]
 # 一些数据库类型的扩展支持
 database_expand = ["sea-orm", "serde", "serde_json"]
 # 提供一些用于http的公共类型
