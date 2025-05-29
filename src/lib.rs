@@ -8,6 +8,7 @@ pub mod http_utils;
 pub mod encrypt;
 pub mod kameo;
 pub mod global_holder;
+pub mod defer;
 
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
