@@ -33,7 +33,7 @@ mod test {
     impl LinkableActor for TestActor {
         async fn spawn_linked(self, args: <Self as Actor>::Arguments, supervisor: ActorCell) -> Result<(ActorRef<Self::Msg>, JoinHandle<()>), SpawnErr> {
 
-            Actor::spawn_linked(None, self, (), supervisor)
+            Actor::spawn_linked(None, self, (), supervisor).await
         }
     }
 

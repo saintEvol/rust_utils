@@ -9,7 +9,7 @@ where
     T: Serialize
 {
     pub code: CodeType,
-    pub msg: Option<String>,
+    pub message: Option<String>,
     pub data: Option<T>
 }
 
@@ -32,15 +32,15 @@ where
     pub fn success(data: Option<T>) -> Response<T> {
         Response {
             code: 0,
-            msg: None,
+            message: None,
             data,
         }
     }
 
-    pub fn fail(code: i32, msg: Option<String>) -> Response<T> {
+    pub fn fail(code: i32, message: Option<String>) -> Response<T> {
         Response {
             code,
-            msg,
+            message,
             data: None
         }
     }
@@ -48,7 +48,7 @@ where
     pub fn fail_with_data(code: i32, msg: Option<String>, data: T) -> Response<T> {
         Response {
             code,
-            msg,
+            message: msg,
             data: Some(data)
         }
     }
